@@ -1,0 +1,82 @@
+[
+  {
+    "id": "eval_001",
+    "category": "HR Policies",
+    "question": "What is our Flexible PTO and vacation policy regarding time off recommendations?",
+    "role": "hr",
+    "expected_sources": ["time-off-types.md", "time-off-and-absence"],
+    "ground_truth_answer": "GitLab offers a Flexible PTO policy where team members are strongly recommended to take at least two consecutive weeks of time off and a minimum of 25 days total throughout the year to recharge."
+  },
+  {
+    "id": "eval_002",
+    "category": "HR Policies",
+    "question": "How are vacation days and vacation money handled for team members in the Netherlands?",
+    "role": "hr",
+    "expected_sources": ["bv-benefits-netherlands.md", "netherlands"],
+    "ground_truth_answer": "In the Netherlands, team members receive a statutory vacation money payment each May and are entitled to at least 20 vacation days per year which run concurrently with GitLab PTO. Unused days expire on July 1st of the following calendar year."
+  },
+  {
+    "id": "eval_003",
+    "category": "HR Policies",
+    "question": "What are the rules for taking vacation time off in Brazil?",
+    "role": "hr",
+    "expected_sources": ["remote-com.md", "brazil"],
+    "ground_truth_answer": "In Brazil, vacation can be divided into up to 3 periods (one period at least 14 days and the other two at least 5 days each). Requests require at least 30 days notice, and 1/3 of vacation days can be converted into cash."
+  },
+  {
+    "id": "eval_004",
+    "category": "Engineering & Careers",
+    "question": "What are the engineering career matrices and progression guidelines?",
+    "role": "engineer",
+    "expected_sources": ["engineering-career-matrices.md", "career-matrices"],
+    "ground_truth_answer": "The engineering career matrices provide competency frameworks, technical impact expectations, and clear progression ladders across engineering levels."
+  },
+  {
+    "id": "eval_005",
+    "category": "Incidents & Postmortems",
+    "question": "What caused the Travis CI production database truncation incident?",
+    "role": "engineer",
+    "expected_sources": ["8f92b6a5-b6d4-4a0f-be02-28242069f691.md", "travis ci", "database"],
+    "ground_truth_answer": "The Travis CI outage was caused when a production database query mistakenly initiated a database truncation during maintenance, causing downtime and a build backlog."
+  },
+  {
+    "id": "eval_006",
+    "category": "Incidents & Postmortems",
+    "question": "What was the cause and duration of the incident.io database outage related to PGAudit?",
+    "role": "engineer",
+    "expected_sources": ["f9f4ba4c-686c-46a4-982c-8dc21bd8a448.md", "incident.io", "pgaudit"],
+    "ground_truth_answer": "The incident.io database outage lasted approximately 2 minutes (14:25 to 14:27 UTC) due to intermittent availability issues caused by PGAudit configuration."
+  },
+  {
+    "id": "eval_007",
+    "category": "Finance & Legal",
+    "question": "What are the key requirements for submitting business expenses according to company policy?",
+    "role": "finance",
+    "expected_sources": ["expenses.md", "finance"],
+    "ground_truth_answer": "Business expenses must be submitted with itemized receipts, incurred solely for legitimate business purposes, and follow standard departmental approval thresholds."
+  },
+  {
+    "id": "eval_008",
+    "category": "Finance & Legal",
+    "question": "What is GitLab's Anti-Corruption Policy regarding gifts and bribes?",
+    "role": "legal",
+    "expected_sources": ["anti-corruption-policy.md", "corruption"],
+    "ground_truth_answer": "GitLab strictly prohibits offering, giving, soliciting, or receiving bribes, kickbacks, or improper gifts in all business dealings globally."
+  },
+  {
+    "id": "eval_009",
+    "category": "HR & Compensation",
+    "question": "How should managers conduct compensation review conversations with team members?",
+    "role": "hr",
+    "expected_sources": ["compensation-review-conversations.md", "compensation"],
+    "ground_truth_answer": "Managers should conduct compensation review conversations transparently, referencing market rate benchmarks, individual performance, and total rewards principles."
+  },
+  {
+    "id": "eval_010",
+    "category": "General & Culture",
+    "question": "What is the Right to Disconnect Charter for team members in France?",
+    "role": "hr",
+    "expected_sources": ["right-to-disconnect-charter.md", "disconnect"],
+    "ground_truth_answer": "The Right to Disconnect Charter ensures team members in France are not required to answer work communications during non-working hours or rest periods."
+  }
+]

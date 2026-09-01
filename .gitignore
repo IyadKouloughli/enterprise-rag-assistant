@@ -1,0 +1,26 @@
+# Environments
+my_env/
+.env
+.venv/
+env/
+venv/
+
+# Python Cache
+__pycache__/
+*.py[cod]
+*$py.class
+
+# IDE / Editor
+.vscode/
+.idea/
+*.swp
+*.DS_Store
+
+# Raw Data (Too large for Git)
+handbook-main.zip
+handbook-main/
+postmortems/
+extracted_conversation.txt
+
+# Do NOT ignore the FAISS index or metadata, because Hugging Face needs them to run!
+# (Git will track the contents of data/index/ and data/metadata.jsonl)
