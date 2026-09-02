@@ -28,7 +28,7 @@ async def chat_wrapper(message, history, role, top_k, rerank):
         history_dicts.append({"role": "user", "content": user_msg})
         history_dicts.append({"role": "assistant", "content": bot_msg})
         
-    effective_query = rewrite_query(message, history=history_dicts)
+    effective_query = await rewrite_query(message, history=history_dicts)
     
     # Run the GPU-decorated retrieval
     sources, audit_stats = run_hybrid_search_gpu(effective_query, role, top_k, rerank)
@@ -60,10 +60,28 @@ async def chat_wrapper(message, history, role, top_k, rerank):
     except Exception as e:
         yield f"Error generating answer: {e}"
 
+custom_css = """
+.gradio-container {
+    background: linear-gradient(135deg, #f5f7fa 0%, #c3cfe2 100%);
+    font-family: 'Inter', sans-serif;
+}
+.message-wrap .message.user {
+    background: linear-gradient(135deg, #2563eb, #1e40af);
+    color: white;
+    border-radius: 12px;
+}
+.message-wrap .message.bot {
+    background: #ffffff;
+    border: 1px solid #e2e8f0;
+    box-shadow: 0 4px 12px rgba(0,0,0,0.05);
+    border-radius: 12px;
+}
+"""
+
 # Build the Gradio UI
-with gr.Blocks(title="NexusAI Copilot", theme=gr.themes.Soft()) as demo:
+with gr.Blocks(title="NexusAI Copilot", theme=gr.themes.Soft(), css=custom_css) as demo:
     gr.Markdown("# 🚀 NexusAI — Enterprise Knowledge Copilot")
-    gr.Markdown("Welcome to the **Native Gradio Interface**. This interface completely bypasses Hugging Face ZeroGPU limitations by running directly on the Gradio Queue.")
+    gr.Markdown("Welcome to the **Native Gradio Interface**. This interface securely connects you to internal enterprise knowledge with Hybrid Search and Neural Reranking.")
     
     with gr.Tab("Copilot Chat"):
         with gr.Row():

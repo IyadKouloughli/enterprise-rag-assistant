@@ -81,7 +81,7 @@ def build_prompt(query: str, sources: list) -> str:
     )
 
 
-def call_llm(
+async def call_llm(
     system: str,
     prompt: str,
     model: str = None,
@@ -89,10 +89,10 @@ def call_llm(
     api_key: str = None,
     temperature: float = 0.2,
 ) -> str:
-    """Single unified function calling any configured LLM API endpoint."""
+    """Single unified function calling any configured LLM endpoint via async httpx."""
     api_key = api_key or os.environ.get("API_KEY")
     if not api_key:
-        sys.exit("Error: API_KEY is not set in your .env file.")
+        raise RuntimeError("Error: API_KEY is not set.")
     api_key = api_key.strip()
 
     model = model or os.environ.get("MODEL_NAME", "meta/llama-3.2-11b-vision-instruct")
@@ -118,34 +118,30 @@ def call_llm(
         "temperature": temperature,
     }
 
-    req = urllib.request.Request(
-        url,
-        data=json.dumps(payload).encode("utf-8"),
-        headers=headers,
-    )
-
     last_error = None
     for attempt in range(1, 4):
         try:
-            with urllib.request.urlopen(req, timeout=30) as resp:
-                data = json.loads(resp.read().decode("utf-8"))
+            async with httpx.AsyncClient(timeout=30.0) as client:
+                resp = await client.post(url, json=payload, headers=headers)
+                if resp.status_code != 200:
+                    error_body = resp.text
+                    last_error = f"LLM API Error ({resp.status_code}) from {url}: {error_body}"
+                    if resp.status_code in [429, 500, 502, 503, 504] and attempt < 3:
+                        await asyncio.sleep(2.0 * attempt)
+                        continue
+                    raise RuntimeError(last_error)
+                
+                data = resp.json()
                 msg = data["choices"][0]["message"]
                 content = msg.get("content")
-                # Handle reasoning models (e.g. Kimi-K3, DeepSeek-R1)
                 if not content:
                     content = msg.get("reasoning_content", "")
                 return content
-        except urllib.error.HTTPError as e:
-            error_body = e.read().decode("utf-8", errors="replace")
-            last_error = f"LLM API Error ({e.code}) from {url}: {error_body}"
-            if e.code in [429, 500, 502, 503, 504] and attempt < 3:
-                time.sleep(2.0 * attempt)
-                continue
-            raise RuntimeError(last_error)
         except Exception as e:
             last_error = f"Error calling LLM API ({url}): {e}"
             if attempt < 3:
-                time.sleep(1.5 * attempt)
+                import asyncio
+                await asyncio.sleep(1.5 * attempt)
                 continue
             raise RuntimeError(last_error)
 
@@ -229,7 +225,7 @@ def needs_contextual_rewriting(query: str, history: Optional[List[Dict[str, str]
     return False
 
 
-def rewrite_query(
+async def rewrite_query(
     query: str,
     history: Optional[List[Dict[str, str]]] = None,
     model: str = None,
@@ -249,7 +245,7 @@ def rewrite_query(
     )
 
     try:
-        rewritten = call_llm(REWRITE_SYSTEM_PROMPT, prompt, model=model, base_url=base_url, api_key=api_key, temperature=0.1)
+        rewritten = await call_llm(REWRITE_SYSTEM_PROMPT, prompt, model=model, base_url=base_url, api_key=api_key, temperature=0.1)
         rewritten = rewritten.strip().strip('"').strip("'")
         return rewritten if rewritten else query
     except Exception:
