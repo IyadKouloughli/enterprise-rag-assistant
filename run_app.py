@@ -22,25 +22,28 @@ def run_hybrid_search_gpu(query, role, top_k, rerank):
     )
 
 async def chat_wrapper(message, history, role, top_k, rerank):
-    # Convert Gradio history (list of [user, bot]) to list of dicts for rewrite_query
-    history_dicts = []
-    for user_msg, bot_msg in history:
-        history_dicts.append({"role": "user", "content": user_msg})
-        history_dicts.append({"role": "assistant", "content": bot_msg})
-        
-    effective_query = await rewrite_query(message, history=history_dicts)
-    
-    # Run the GPU-decorated retrieval
-    sources, audit_stats = run_hybrid_search_gpu(effective_query, role, top_k, rerank)
-    
-    if not sources:
-        yield f"No relevant sources found in the knowledge base for role(s) [{role}]."
-        return
-        
-    prompt = build_prompt(effective_query, sources)
-    accumulated_answer = []
+    # Immediate feedback to the user so they know the server is processing
+    yield "🔍 *Processing your query and searching the knowledge base...*"
     
     try:
+        # Convert Gradio history (list of [user, bot]) to list of dicts for rewrite_query
+        history_dicts = []
+        for user_msg, bot_msg in history:
+            history_dicts.append({"role": "user", "content": user_msg or ""})
+            history_dicts.append({"role": "assistant", "content": bot_msg or ""})
+            
+        effective_query = await rewrite_query(message, history=history_dicts)
+        
+        # Run the GPU-decorated retrieval
+        sources, audit_stats = run_hybrid_search_gpu(effective_query, role, top_k, rerank)
+        
+        if not sources:
+            yield f"No relevant sources found in the knowledge base for role(s) [{role}]."
+            return
+            
+        prompt = build_prompt(effective_query, sources)
+        accumulated_answer = []
+        
         # Stream from LLM
         async for token in stream_llm(
             system="You are an internal enterprise knowledge assistant. Answer using ONLY provided sources with [1], [2] citations.",
@@ -58,7 +61,8 @@ async def chat_wrapper(message, history, role, top_k, rerank):
         yield final_answer
         
     except Exception as e:
-        yield f"Error generating answer: {e}"
+        import traceback
+        yield f"⚠️ **System Error:** {str(e)}\n\n```python\n{traceback.format_exc()}\n```"
 
 custom_css = """
 .gradio-container {
