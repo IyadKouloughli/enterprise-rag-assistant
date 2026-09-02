@@ -24,6 +24,7 @@ import json
 import os
 import sys
 import time
+import asyncio
 import urllib.error
 import urllib.request
 import re
@@ -245,7 +246,9 @@ async def rewrite_query(
     )
 
     try:
-        rewritten = await call_llm(REWRITE_SYSTEM_PROMPT, prompt, model=model, base_url=base_url, api_key=api_key, temperature=0.1)
+        # Use a faster, lighter model for query rewriting to reduce latency
+        fast_model = "meta/llama-3.1-8b-instruct"
+        rewritten = await call_llm(REWRITE_SYSTEM_PROMPT, prompt, model=fast_model, base_url=base_url, api_key=api_key, temperature=0.1)
         rewritten = rewritten.strip().strip('"').strip("'")
         return rewritten if rewritten else query
     except Exception:
