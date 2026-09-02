@@ -64,26 +64,11 @@ async def chat_wrapper(message, history, role, top_k, rerank):
         import traceback
         yield f"⚠️ **System Error:** {str(e)}\n\n```python\n{traceback.format_exc()}\n```"
 
-custom_css = """
-.gradio-container {
-    background: linear-gradient(135deg, #f5f7fa 0%, #c3cfe2 100%);
-    font-family: 'Inter', sans-serif;
-}
-.message-wrap .message.user {
-    background: linear-gradient(135deg, #2563eb, #1e40af);
-    color: white;
-    border-radius: 12px;
-}
-.message-wrap .message.bot {
-    background: #ffffff;
-    border: 1px solid #e2e8f0;
-    box-shadow: 0 4px 12px rgba(0,0,0,0.05);
-    border-radius: 12px;
-}
-"""
+# Cleaned up custom CSS
+custom_css = ""
 
 # Build the Gradio UI
-with gr.Blocks(title="NexusAI Copilot", theme=gr.themes.Soft(), css=custom_css) as demo:
+with gr.Blocks(title="NexusAI Copilot", theme=gr.themes.Default()) as demo:
     gr.Markdown("# 🚀 NexusAI — Enterprise Knowledge Copilot")
     gr.Markdown("Welcome to the **Native Gradio Interface**. This interface securely connects you to internal enterprise knowledge with Hybrid Search and Neural Reranking.")
     
