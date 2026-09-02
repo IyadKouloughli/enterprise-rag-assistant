@@ -10,41 +10,56 @@ app_file: run_app.py
 pinned: false
 ---
 
-# NexusAI — Enterprise Knowledge & Operations Copilot
+# 🚀 NexusAI — Enterprise Knowledge & Operations Copilot
 
-NexusAI is a production-grade Retrieval-Augmented Generation (RAG) platform built to securely connect enterprise employees with internal documentation, incident reports, and operational knowledge. 
+![Architecture](https://img.shields.io/badge/Architecture-RAG-blue) ![Deployment](https://img.shields.io/badge/Deployment-HuggingFace_Spaces-orange) ![GPU](https://img.shields.io/badge/Compute-ZeroGPU-green)
 
-It is designed to run seamlessly on Hugging Face Spaces (Gradio + ZeroGPU) using a localized vector database.
+NexusAI is a production-grade **Retrieval-Augmented Generation (RAG)** platform built to securely connect enterprise employees with internal documentation, incident reports, and operational knowledge. 
+
+It is engineered from the ground up to handle complex query reasoning, strict role-based access control (RBAC), and high-precision semantic retrieval. The application is fully deployed and accessible on **Hugging Face Spaces**, utilizing the highly scalable **ZeroGPU** infrastructure for real-time model inference.
 
 ## 🌟 Key Features
 
-* **Advanced Hybrid Search**: Combines FAISS dense semantic retrieval with BM25 sparse keyword matching, ensuring highly accurate document retrieval for both conceptual questions and exact-match identifiers (e.g., `INC-1004`).
-* **Document-Level Security (ACL)**: Hardened metadata filtering ensures that users can only retrieve and view documents authorized for their specific role (e.g., `hr`, `engineer`, `manager`). Unauthorized documents are completely invisible to the LLM.
-* **Neural Reranking**: Integrates an MS-MARCO Cross-Encoder to mathematically rerank the top candidate documents retrieved by the hybrid search, guaranteeing the LLM is fed the highest quality context.
-* **Citation Verification**: The engine maps LLM-generated claims to exact source text chunks and computes a real-time `Citation Validity Rate`. Hallucinated citations are caught and flagged automatically.
-* **Automated CI/CD Evaluation**: Uses LLM-as-a-Judge (Context Precision, Recall, Answer Relevance, and Faithfulness) integrated into a GitHub Actions pipeline (`eval_rag.py`) to prevent regression in retrieval quality.
+* **Advanced Hybrid Search**: Combines **FAISS dense semantic retrieval** (using `BAAI/bge-small-en-v1.5`) with **BM25 sparse keyword matching**. This ensures highly accurate document retrieval for both conceptual questions and exact-match alphanumeric identifiers (e.g., `INC-1004`, `v2.7.1`).
+* **Document-Level Security (ACL)**: Hardened metadata filtering ensures that users can only retrieve and view documents explicitly authorized for their specific role (e.g., `hr`, `engineer`, `manager`). Unauthorized documents are cryptographically invisible to the LLM generation layer.
+* **Neural Reranking**: Integrates a Cross-Encoder (`cross-encoder/ms-marco-MiniLM-L-6-v2`) to mathematically rerank the top candidate documents retrieved by the hybrid search engine, guaranteeing the LLM is fed the highest quality contextual signals.
+* **Query Rewriting & Intelligence**: Utilizes `meta/llama-3.1-8b-instruct` to asynchronously rewrite ambiguous user queries into highly optimized search vectors, dramatically reducing hallucination rates and improving context precision.
+* **Citation Verification Engine**: The system maps LLM-generated claims directly to exact source text chunks, computing a real-time `Citation Validity Rate`. Hallucinated citations are caught and flagged automatically before the user reads them.
+* **Automated CI/CD Evaluation**: Leverages LLM-as-a-Judge (measuring Context Precision, Recall, Answer Relevance, and Faithfulness) integrated into a GitHub Actions pipeline to prevent regressions in retrieval quality.
 
-## 🏗️ Architecture
+## 🏗️ Architecture & Deployment
 
-1. **Frontend**: Native `gradio.Blocks` interface providing real-time LLM token streaming and citation verification.
-2. **Backend**: Python `httpx` async streams connecting directly to Nvidia NIM (Llama 3.2 11B Vision).
-3. **Database**: Local FAISS & BM25 `.pkl` indexes hosted directly within the Space environment (`data/index/`). No external database connections required.
+The platform is designed to be completely serverless and runs on **Hugging Face Spaces**.
 
-## 🚀 Running on Hugging Face Spaces
+1. **Frontend Layer**: Native asynchronous `gradio.Blocks` interface providing real-time UI streaming, parameter control, and citation rendering.
+2. **Compute Layer (ZeroGPU)**: Utilizing Hugging Face's dynamic `spaces` decorator, the heavy embedding and reranking transformers are swapped into active VRAM only when requested, ensuring high-throughput without dedicated GPU overhead.
+3. **Database Layer**: Localized FAISS & BM25 `.pkl` indexes hosted directly within the Space environment (`data/index/`). No external vector database connections or persistent networking are required, ensuring zero network latency during the retrieval phase.
+4. **Generation Layer**: Python `httpx` async event streams connecting directly to the **Llama 3.1 8B Instruct** model via the blazing-fast Nvidia NIM API.
 
-This repository is optimized for deployment on Hugging Face Spaces using the **ZeroGPU** hardware tier.
+## 🚀 Live Demo on Hugging Face Spaces
 
-### Setup Instructions
-1. Create a new Hugging Face Space.
-2. Set the SDK to **Gradio**.
-3. Under the **Settings > Variables and secrets** tab, add your LLM API Key:
-   - `API_KEY`: Your Nvidia API Key (`nvapi-...`)
-4. **Push** this repository to the Space. 
-5. The `spaces` library will automatically request ZeroGPU access for the FAISS embedding and Cross-Encoder models during runtime.
+This repository is continuously deployed to Hugging Face Spaces. 
 
-*(Note: Ensure you do NOT set `BASE_URL` or `MODEL_NAME` secrets unless you are explicitly overriding the defaults. The app automatically configures the correct endpoint for `meta/llama-3.2-11b-vision-instruct`)*.
+**To experience the Document-Level Security (ACL) in action:**
+1. Navigate to the Copilot tab in the UI.
+2. Set your **Role (ACL)** to `hr` and ask: *"Give me the root cause of the INC-0001 database outage."* The system will correctly block access to engineering data.
+3. Change your **Role (ACL)** to `engineer` and ask the exact same question. The system will retrieve the incident report and generate a grounded, highly-technical summary with accurate citations!
 
-## 🧪 Testing the Copilot
-Once the Space is running, test the ACL security by switching roles in the interface:
-- **Role `hr`**: Ask for details on an engineering database outage. The system will block the request.
-- **Role `engineer`**: Ask the same question. The system will retrieve the incident report and generate a grounded summary with citations!
+## 🛠️ Local Development & Setup
+
+If you wish to run this pipeline locally:
+
+```bash
+# 1. Clone the repository
+git clone https://github.com/IyadKouloughli/enterprise-rag-assistant.git
+cd enterprise-rag-assistant
+
+# 2. Install minimal dependencies
+pip install -r requirements.txt
+
+# 3. Add your LLM API Key
+echo "API_KEY=your_nvidia_api_key_here" > .env
+
+# 4. Boot the Gradio application
+python run_app.py
+```
