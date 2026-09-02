@@ -21,6 +21,7 @@ from pathlib import Path
 from typing import Any, Dict, List, Optional, Set, Tuple, Union
 
 import numpy as np
+import spaces
 
 # Global cache for heavy models and indexes to avoid reloading in persistent processes
 _FAISS_INDEX_CACHE = {}
@@ -173,6 +174,7 @@ def rerank_candidates(
     return reranked[:top_k]
 
 
+@spaces.GPU
 def hybrid_search(
     index_dir: Path,
     query: str,
