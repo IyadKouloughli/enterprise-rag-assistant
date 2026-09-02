@@ -95,8 +95,12 @@ def call_llm(
 
     model = model or os.environ.get("MODEL_NAME", "meta/llama-3.2-11b-vision-instruct")
     base_url = base_url or os.environ.get("BASE_URL", "https://integrate.api.nvidia.com/v1")
-
-    url = f"{base_url.rstrip('/')}/chat/completions"
+    base_url = base_url.strip().rstrip('/')
+    
+    if base_url.endswith("/chat/completions"):
+        url = base_url
+    else:
+        url = f"{base_url}/chat/completions"
     headers = {
         "Authorization": f"Bearer {api_key}",
         "Content-Type": "application/json",
