@@ -1,24 +1,10 @@
----
-title: NexusAI Copilot
-emoji: 🚀
-colorFrom: blue
-colorTo: indigo
-sdk: gradio
-sdk_version: "4.44.1"
-python_version: "3.11"
-app_file: run_app.py
-pinned: false
----
-
-# 🚀 NexusAI — Enterprise Knowledge & Operations Copilot
-
-![Architecture](https://img.shields.io/badge/Architecture-RAG-blue) ![Deployment](https://img.shields.io/badge/Deployment-HuggingFace_Spaces-orange) ![GPU](https://img.shields.io/badge/Compute-ZeroGPU-green)
+# NexusAI — Enterprise Knowledge & Operations Copilot
 
 NexusAI is a production-grade **Retrieval-Augmented Generation (RAG)** platform built to securely connect enterprise employees with internal documentation, incident reports, and operational knowledge. 
 
 It is engineered from the ground up to handle complex query reasoning, strict role-based access control (RBAC), and high-precision semantic retrieval. The application is fully deployed and accessible on **Hugging Face Spaces**, utilizing the highly scalable **ZeroGPU** infrastructure for real-time model inference.
 
-## 🌟 Key Features
+## Key Features
 
 * **Advanced Hybrid Search**: Combines **FAISS dense semantic retrieval** (using `BAAI/bge-small-en-v1.5`) with **BM25 sparse keyword matching**. This ensures highly accurate document retrieval for both conceptual questions and exact-match alphanumeric identifiers (e.g., `INC-1004`, `v2.7.1`).
 * **Document-Level Security (ACL)**: Hardened metadata filtering ensures that users can only retrieve and view documents explicitly authorized for their specific role (e.g., `hr`, `engineer`, `manager`). Unauthorized documents are cryptographically invisible to the LLM generation layer.
@@ -27,7 +13,7 @@ It is engineered from the ground up to handle complex query reasoning, strict ro
 * **Citation Verification Engine**: The system maps LLM-generated claims directly to exact source text chunks, computing a real-time `Citation Validity Rate`. Hallucinated citations are caught and flagged automatically before the user reads them.
 * **Automated CI/CD Evaluation**: Leverages LLM-as-a-Judge (measuring Context Precision, Recall, Answer Relevance, and Faithfulness) integrated into a GitHub Actions pipeline to prevent regressions in retrieval quality.
 
-## 🏗️ Architecture & Deployment
+## Architecture & Deployment
 
 The platform is designed to be completely serverless and runs on **Hugging Face Spaces**.
 
@@ -36,7 +22,7 @@ The platform is designed to be completely serverless and runs on **Hugging Face 
 3. **Database Layer**: Localized FAISS & BM25 `.pkl` indexes hosted directly within the Space environment (`data/index/`). No external vector database connections or persistent networking are required, ensuring zero network latency during the retrieval phase.
 4. **Generation Layer**: Python `httpx` async event streams connecting directly to the **Llama 3.1 8B Instruct** model via the blazing-fast Nvidia NIM API.
 
-## 🚀 Live Demo on Hugging Face Spaces
+## Live Demo on Hugging Face Spaces
 
 This repository is continuously deployed to Hugging Face Spaces. 
 
@@ -45,7 +31,7 @@ This repository is continuously deployed to Hugging Face Spaces.
 2. Set your **Role (ACL)** to `hr` and ask: *"Give me the root cause of the INC-0001 database outage."* The system will correctly block access to engineering data.
 3. Change your **Role (ACL)** to `engineer` and ask the exact same question. The system will retrieve the incident report and generate a grounded, highly-technical summary with accurate citations!
 
-## 🛠️ Local Development & Setup
+## Local Development & Setup
 
 If you wish to run this pipeline locally:
 
