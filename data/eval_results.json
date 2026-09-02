@@ -1,6 +1,6 @@
 {
   "total_test_queries": 10,
-  "total_evaluation_time_seconds": 226.71,
+  "total_evaluation_time_seconds": 518.93,
   "top_k": 5,
   "retrieval_baseline": {
     "recall_at_k": 1.0,
@@ -10,15 +10,15 @@
   },
   "retrieval_reranked": {
     "recall_at_k": 1.0,
-    "precision_at_k": 0.8,
+    "precision_at_k": 0.82,
     "mrr": 1.0,
-    "ndcg_at_k": 1.4569
+    "ndcg_at_k": 1.4833
   },
   "generation_metrics": {
-    "faithfulness": 0.9,
-    "context_relevance": 0.925,
-    "answer_relevance": 0.915,
-    "citation_accuracy": 0.9126
+    "faithfulness": 0.895,
+    "context_relevance": 0.93,
+    "answer_relevance": 0.91,
+    "citation_accuracy": 0.9276
   },
   "per_test_details": [
     {
@@ -34,18 +34,18 @@
       },
       "reranked_retrieval": {
         "recall_at_k": 1.0,
-        "precision_at_k": 0.6,
+        "precision_at_k": 0.8,
         "mrr": 1.0,
-        "ndcg_at_k": 1.1569
+        "ndcg_at_k": 1.421
       },
       "generation": {
         "faithfulness": 0.95,
         "context_relevance": 0.9,
         "answer_relevance": 0.95,
-        "citation_accuracy": 0.8,
-        "judge_reasoning": "The generated answer is mostly faithful to the retrieved context, as it accurately states the recommendation for time off. However, it does not explicitly mention the policy's overall philosophy or the fact that team members are free to take PTO as long as they coordinate with their manager. The context is highly relevant to the question, as it provides detailed information about GitLab's Flexible PTO policy. The generated answer is also highly relevant and direct, as it directly answers the question and provides a clear recommendation for time off."
+        "citation_accuracy": 1.0,
+        "judge_reasoning": "The generated answer is mostly faithful to the retrieved context, with a slight deviation in the exact wording of the recommendation. The context is highly relevant to the question, providing detailed information about GitLab's Flexible PTO policy. The generated answer directly answers the question, but could be more concise and directly state the recommendation without referencing the context."
       },
-      "generated_answer": "We strongly recommend taking at least two consecutive weeks of time off and at minimum 25 days total throughout the year [1]. This recommendation is in place to ensure team members have adequate time to recharge and maintain work-life balance.",
+      "generated_answer": "GitLab encourages team members to take adequate time off to recharge, with a strong recommendation to take at least two consecutive weeks of time off and at minimum 25 days total throughout the year [1]. This policy reflects the company's values of transparency, collaboration, and overall Philosophy to Time Away from Work [1].",
       "citations_summary": "VERIFIED"
     },
     {
@@ -69,10 +69,10 @@
         "faithfulness": 0.95,
         "context_relevance": 0.9,
         "answer_relevance": 0.95,
-        "citation_accuracy": 1.0,
-        "judge_reasoning": "The generated answer is mostly faithful to the retrieved context, with some minor omissions. The context is highly relevant to the question, providing detailed information about vacation days and vacation money in the Netherlands. The generated answer directly answers the question, but could be more comprehensive, as it only mentions the minimum of 20 vacation days and does not explicitly state that unused days expire on July 1st of the following calendar year."
+        "citation_accuracy": 0.9,
+        "judge_reasoning": "The generated answer accurately states that team members in the Netherlands receive a minimum of 20 vacation days annually, which accrue at 1.67 days/month from the start date. It also mentions that unused days carry over to the next calendar year but expire July 1st. However, the answer could be more precise in stating that the vacation money payment is received each May as defined by the government. The context is highly relevant as it provides detailed information about vacation days, vacation money, and other benefits. The answer is fully relevant and direct, but could be more concise in its explanation."
       },
-      "generated_answer": "Team members in the Netherlands receive a minimum of 20 vacation days annually as per the statutory requirements [1]. These days accrue at 1.67 days/month from the start date and can be carried over to the next calendar year but expire on July 1st [1]. For partial years, the entitlement is pro-rated [1]. To track vacation time, team members must designate all vacation days as \"Paid Time Off\" in Workday [1]. Additionally, team members receive vacation money, also known as \"Vakantiegeld,\" which is paid annually in May, as defined by the government [1].",
+      "generated_answer": "Team members in the Netherlands receive a minimum of 20 vacation days annually as per the statutory requirements, which accrue at 1.67 days/month from the start date [1]. Unused days carry over to the next calendar year but expire July 1st. Team members must designate all vacation days taken as \"Paid Time Off\" in Workday to ensure that vacation entitlement is properly tracked [1]. Additionally, team members receive the customary vacation money payment each May, as defined by the government [1].",
       "citations_summary": "VERIFIED"
     },
     {
@@ -88,18 +88,18 @@
       },
       "reranked_retrieval": {
         "recall_at_k": 1.0,
-        "precision_at_k": 0.8,
+        "precision_at_k": 0.6,
         "mrr": 1.0,
-        "ndcg_at_k": 1.5706
+        "ndcg_at_k": 1.3066
       },
       "generation": {
-        "faithfulness": 0.8,
+        "faithfulness": 0.85,
         "context_relevance": 0.95,
         "answer_relevance": 0.8,
-        "citation_accuracy": 0.9333,
-        "judge_reasoning": "The generated answer partially deviates from the retrieved context. It mentions 30 calendar days of paid time off after 12 months of service, which is not present in the retrieved context. The answer also omits important details such as the conversion of 1/3 of vacation days into cash and the requirement to submit the 'Aviso de F\u00e9rias' document. The retrieved context is highly relevant to the question, but the generated answer does not fully utilize this context to provide a complete and accurate response."
+        "citation_accuracy": 0.9428,
+        "judge_reasoning": "The generated answer is mostly faithful to the retrieved context, but it misses some details such as the 120 days of statutory maternity leave and the 5 days of paid statutory paternity leave. The context is highly relevant to the question, but the answer is not fully relevant and direct as it does not cover all the rules for taking vacation time off in Brazil. The answer also does not mention the requirement to submit the time off request with at least 30 days' notice, although it is recommended to submit the request 45 days in advance."
       },
-      "generated_answer": "To take vacation time off in Brazil, team members must follow specific rules. They are entitled to 30 calendar days of paid time off after 12 months of service [4]. The time off can be divided into up to 3 periods, with one period being at least 14 days long and the other two periods being at least 5 days long each [1]. Team members cannot start their vacation two days before a holiday or a weekend as per the leave rules in Brazil [1]. Vacations earned must be taken during the concession period and cannot be accumulated or carried over to the following year [1]. Team members are required to submit their time off request with at least 30 days' notice, although it is recommended to submit the request 45 days in advance [1].",
+      "generated_answer": "After 12 months of service, team members in Brazil are entitled to 30 calendar days of paid time off [4]. This time off will automatically be deducted from the statutory allowance first, and if the time off does not fall under the requirements, it will be used as Flex Time Off [1]. Team members are also eligible for GitLab's paid time off policy. The time off can be divided into up to 3 periods, with one period being at least 14 days long and the other two periods being at least 5 days long each [1]. Additionally, team members cannot start their vacation two days before a holiday or a weekend [1]. Vacations earned must be taken during the concession period and cannot be accumulated or carried over to the following year [1]. Team members are required to submit their time off request with at least 30 days' notice, although it is recommended to submit the request 45 days in advance [1].",
       "citations_summary": "VERIFIED"
     },
     {
@@ -123,10 +123,10 @@
         "faithfulness": 0.85,
         "context_relevance": 0.95,
         "answer_relevance": 0.9,
-        "citation_accuracy": 0.9,
-        "judge_reasoning": "The generated answer is mostly faithful to the retrieved context, but it includes some minor inaccuracies, such as the mention of Senior Leadership Competencies, Senior Technical Competencies, and Senior Values Alignment for the Software Engineer in Test role, which is now deprecated and transitioned to Backend Engineer. The context is highly relevant for answering the question, but the answer could be more direct and complete. For example, it does not explicitly mention the four career matrices delivered by the Career Matrix Working Group, which is a key point in the retrieved context."
+        "citation_accuracy": 0.8667,
+        "judge_reasoning": "The generated answer is mostly faithful to the retrieved context, but it contains some minor inaccuracies. The context is highly relevant to the question, providing detailed information about the engineering career matrices. However, the generated answer does not directly and completely answer the question, as it does not provide a clear progression ladder across engineering levels. The answer also contains some extraneous information, such as the mention of the Career Development, Promotion, Performance, etc. Docs Templates folder, which is not directly relevant to the question."
       },
-      "generated_answer": "The Engineering Career Matrices are a set of guidelines developed by the Career Matrix Working Group to help Engineering teams at GitLab define and track career progression. The matrices outline the expected competencies and responsibilities for different levels of engineers, from Intermediate to Senior. \n\nThe matrices were delivered in six iterations, with the final iteration being the application by a Sub Department IC/Manager Pair [1]. The Framework for Engineering Functional Leads to implement and customize for their teams was also completed [1]. \n\nThe Intermediate level competencies for Software Engineer in Test role (now deprecated and transitioned to Backend Engineer) include Intermediate Leadership Competencies, Intermediate Technical Competencies, and Intermediate Values Alignment [2]. \n\nThe Senior level competencies for Software Engineer in Test role (now deprecated and transitioned to Backend Engineer) include Senior Leadership Competencies, Senior Technical Competencies, and Senior Values Alignment [4]. \n\nThe Career Matrix Working Group was led by Darva Satcher, with roles and responsibilities including Facilitator, PO Functional Lead, Development Functional Lead, Support Functional Lead, Quality Functional Lead, Infrastructure Functional Lead, and Executive Sponsor [3]. \n\nFor progression guidelines, the Support Engineer Career Path recommends familiarizing oneself with Career Development at GitLab, Engineering Career Development at GitLab, and planning one's career path [5].",
+      "generated_answer": "The Engineering Career Matrices are a set of guidelines and frameworks developed by the Career Matrix Working Group to help Engineering teams at GitLab progress and grow. The matrices outline the expected competencies, leadership skills, and values alignment for different levels of engineers, from Intermediate to Senior.\n\nThe Career Matrix Working Group aimed to deliver four career matrices in Engineering as part of the PlatoHQ program in response to CultureAmp feedback aligned with the FY21-Q1 Engineering KR [3]. The group consisted of various functional leads, including Infrastructure Functional Lead Marin Jankovski, Quality Functional Lead Tanya Pazitny, and Executive Sponsor Christopher Lefelhocz [3].\n\nThe matrices are designed to provide a framework for engineers to progress and grow, with clear expectations and guidelines for each level. The Intermediate level, for example, is expected to exhibit Intermediate Leadership Competencies, Intermediate Technical Competencies, and Intermediate Values Alignment [2].\n\nThe Career Matrix Working Group delivered the following matrices:\n\n1. A Baseline Engineering Career Matrix [1]\n2. A Framework for Engineering Functional Leads to implement and customize for their teams to ensure consistency and uniformity across Engineering Teams [1]\n3. A fully populated Department Level Career Matrix [1]\n4. A fully populated Sub Department Level Career Matrix [1]\n\nThe matrices are designed to be used in conjunction with other career development tools and resources, such as the Career Development, Promotion, Performance, etc. Docs Templates folder [4].",
       "citations_summary": "VERIFIED"
     },
     {
@@ -151,9 +151,9 @@
         "context_relevance": 0.9,
         "answer_relevance": 0.95,
         "citation_accuracy": 1.0,
-        "judge_reasoning": "The generated answer is mostly faithful to the retrieved context, with only minor omissions. The context is highly relevant to the question, providing detailed information about the incident. The generated answer directly answers the question, but with some minor simplifications and omissions of specific details."
+        "judge_reasoning": "The generated answer is almost fully grounded in the retrieved context, with only minor omissions. The context is highly relevant to the question, providing detailed information about the incident. The generated answer directly answers the question, but with some minor simplification of the original context."
       },
-      "generated_answer": "A developer executing a test suite using the Database Cleaner gem in an old terminal window caused the Travis CI production database truncation incident [1]. The terminal window, part of a tmux session, unknowingly had a `DATABASE_URL` environment variable set to the production database from previous inspection activities [1].",
+      "generated_answer": "A developer executed a test suite using the Database Cleaner gem in an old terminal window, which unknowingly had a `DATABASE_URL` environment variable set to the production database from previous inspection activities [1]. This allowed the tooling and processes at the time to connect to the primary database with write access rather than a read-only follower [1].",
       "citations_summary": "VERIFIED"
     },
     {
@@ -205,9 +205,9 @@
         "context_relevance": 0.95,
         "answer_relevance": 0.9,
         "citation_accuracy": 1.0,
-        "judge_reasoning": "The generated answer is mostly faithful to the retrieved context, but it includes some additional information not explicitly mentioned in the context. The context is highly relevant to the question, but the answer could be more direct and accurate. For example, the answer mentions submitting expenses by the end of the fiscal quarter, which is not mentioned in the context. Additionally, the answer includes some information about manager approval thresholds, which is not directly relevant to the question."
+        "judge_reasoning": "The generated answer is mostly faithful to the retrieved context, but it misses some details such as the requirement to submit expenses through Navan for CXC Global and the specific deadline for submitting expenses for CXC Global. The context is highly relevant for answering the question, but the answer could be more direct and complete. For example, it does not mention the requirement to submit receipts for all expenses, including those under $50 USD for US Team Members. The answer also does not mention the specific deadline for submitting expenses, which is the 3rd of each month for CXC Global and the end of the fiscal quarter for other expenses."
       },
-      "generated_answer": "To submit business expenses according to company policy, Team Members must:\n\n- Submit expenses through Navan [1].\n- Include location, duration, purpose, and supporting screenshots/receipts for business trips [1].\n- Submit receipts for every business expense, with receipts containing vendor name, date of purchase, listing of what was purchased, and a full breakout of the subtotal and tax amounts [3].\n- Fill in the description box in Navan with details of the expense, including items purchased, period of service, trip details, and reason for trip [3].\n- Submit expenses by the end of the fiscal quarter in which the expense was incurred [2].\n- Ensure that expenses are submitted and approved by the Accounts Payable team (for out of policy expenses) by the 3rd of each month to be included in the current month's payment [1].\n- Not expense items on behalf of their managers [3].\n- Not submit expenses that are over 90 days from the purchase date without approval from their manager [3].\n- Not exceed the maximum monthly limit of $10K USD (or local currency equivalent) for reimbursement [3].\n\nManagers and Budget Owners are also responsible for:\n\n- Approving business critical trips and ensuring that they are within departmental budgets [2].\n- Approving expenses that exceed the $150 quarterly limit for mileage [5].\n- Approving co-working space expenses that exceed 5 days per month [5].\n- Approving expenses that require manager's approval via email [5].",
+      "generated_answer": "To submit business expenses according to company policy, Team Members must include the following information: location, duration, purpose, and supporting screenshots/receipts [1]. Expenses must be submitted through Navan, and receipts are required for all expenses, with the exception of US Team Members who only need to submit receipts for expenses over $50 USD [3]. The description box in Navan must be filled out with details of the expense, including items purchased, period of service, and reason for trip [3]. Expenses must be submitted timely, with Team Members submitting expenses by the end of the fiscal quarter in which the expense was incurred [3, 5].",
       "citations_summary": "VERIFIED"
     },
     {
@@ -223,18 +223,18 @@
       },
       "reranked_retrieval": {
         "recall_at_k": 1.0,
-        "precision_at_k": 0.8,
+        "precision_at_k": 1.0,
         "mrr": 1.0,
-        "ndcg_at_k": 1.5438
+        "ndcg_at_k": 1.8078
       },
       "generation": {
         "faithfulness": 0.9,
         "context_relevance": 0.95,
         "answer_relevance": 0.9,
         "citation_accuracy": 1.0,
-        "judge_reasoning": "The generated answer is mostly faithful to the retrieved context, but it slightly misinterprets the definition of 'gift' in the context of the Anti-Corruption Policy. The context is highly relevant to the question, but the answer could be more direct and complete. For example, it does not explicitly state that the policy applies to all GitLab Team Members, including employees, contractors, officers, and members of its board of directors. Additionally, the answer could provide more specific details about the restrictions on gifts and entertainment to government officials."
+        "judge_reasoning": "The generated answer is mostly faithful to the retrieved context, but it slightly misinterprets the definition of 'gift' in the context of the Anti-Corruption Policy. The context is highly relevant to the question, but the answer could be more direct and complete. For example, it does not explicitly mention the prohibition on accepting gifts or entertainment from government officials, which is an important aspect of the policy."
       },
-      "generated_answer": "GitLab's Anti-Corruption Policy prohibits the authorization, making, offering, promising, requesting, receiving, or accepting of bribes or kickbacks in any form [3]. This prohibition applies to all forms of bribery, including commercial bribery as well as bribery of government employees or officials [3]. Additionally, GitLab restricts the provision of gifts and entertainment to government officials, with specific limits on the total value of gifts or entertainment provided per person per event, and per calendar year [4]. The policy also requires Team Members to identify all government officials in the \"Participants\" field when submitting an expense report in Navan [4]. Furthermore, Partners are required to comply with all applicable local, national, and international anti-corruption laws and regulations, and to have a written anti-corruption/anti-bribery policy that includes an annual review with their employees [5].",
+      "generated_answer": "GitLab's Anti-Corruption Policy prohibits giving or receiving bribes or accepting kickbacks in any form [3]. This prohibition applies to all forms of bribery, including commercial bribery as well as bribery of government employees or officials [3]. GitLab also prohibits engaging a third party who pays bribes in connection with the company's business, as it can be held criminally and civilly liable for the bad acts of its partners [2, 5]. The policy requires all team members and partners to comply with the Foreign Corrupt Practices Act (FCPA) and anti-bribery laws and regulations in foreign jurisdictions [3]. Partners are also required to have a written anti-corruption/anti-bribery policy that includes an annual review with their employees [4].",
       "citations_summary": "VERIFIED"
     },
     {
@@ -255,13 +255,13 @@
         "ndcg_at_k": 1.8078
       },
       "generation": {
-        "faithfulness": 0.95,
-        "context_relevance": 0.9,
-        "answer_relevance": 0.95,
-        "citation_accuracy": 0.8,
-        "judge_reasoning": "The generated answer is mostly faithful to the retrieved context, as it accurately mentions reviewing GitLab's compensation principles, personal details, and the Total Compensation Statement. However, it does not explicitly mention referencing market rate benchmarks, individual performance, and total rewards principles, which are mentioned in the ground truth answer. The context is highly relevant for answering the question, as it provides detailed information on compensation review conversations. The generated answer is fully relevant and direct, as it provides a clear and concise answer to the question."
+        "faithfulness": 0.85,
+        "context_relevance": 0.95,
+        "answer_relevance": 0.9,
+        "citation_accuracy": 0.6667,
+        "judge_reasoning": "The generated answer is mostly faithful to the retrieved context, but it slightly deviates from the original text. The context is highly relevant to the question, providing detailed information on compensation review conversations. However, the generated answer does not fully address the question, as it does not explicitly mention referencing market rate benchmarks and total rewards principles."
       },
-      "generated_answer": "Managers should conduct compensation review conversations with team members by reviewing and understanding GitLab's compensation principles, personal details about the team member in Workday, and the Total Compensation Statement. They should communicate the increase face-to-face over Zoom, prepare for the call ahead of time, and clearly explain the reasoning behind the compensation change [1]. It is also recommended to review the Annual Compensation review page for all considerations that go into compensation reviews. Managers should avoid blaming others, making future promises, and protecting the confidentiality of other team members by not comparing their compensation to others [1].",
+      "generated_answer": "Managers should conduct compensation review conversations with team members in a face-to-face manner over Zoom, allowing for a dialogue and the opportunity to pick up on non-verbal cues [2]. Before the conversation, managers should review the Total Compensation Statement and be aware of the team member's current compensation, hire date, performance factor, growth potential factor, and other relevant details. \n\nDuring the conversation, managers should communicate the compensation change at the beginning, give the team member time to ask questions, and clearly explain the reasoning behind the change. It's also essential to protect the confidentiality of other team members and avoid blaming others or making future promises. \n\nManagers should be prepared to handle potential reactions, such as a team member being unhappy with their compensation adjustment or performance and growth potential rating. In such cases, managers should listen to the team member's feedback, reiterate GitLab's compensation philosophy, and work with them to put together a development plan to help them achieve their goals.",
       "citations_summary": "VERIFIED"
     },
     {
@@ -285,11 +285,11 @@
         "faithfulness": 0.85,
         "context_relevance": 0.95,
         "answer_relevance": 0.9,
-        "citation_accuracy": 0.7928,
-        "judge_reasoning": "The generated answer is mostly faithful to the retrieved context, but it contains some minor inaccuracies. The context is highly relevant to the question, providing detailed information about the Right to Disconnect Charter. However, the generated answer does not directly and completely answer the question, as it includes some additional information not present in the context. For example, the statement about prioritizing family and friends over work is not explicitly mentioned in the context. Additionally, the answer does not clearly state the main purpose of the Charter, which is to ensure team members are not required to answer work communications during non-working hours or rest periods."
+        "citation_accuracy": 1.0,
+        "judge_reasoning": "The generated answer is mostly faithful to the retrieved context, but it does not explicitly mention the exceptions to the Right to Disconnect Charter. The context is highly relevant to the question, providing detailed information about the Charter. However, the generated answer does not directly and completely answer the question, as it does not provide a clear definition of the Right to Disconnect Charter. It also includes some general statements that are not directly supported by the context."
       },
-      "generated_answer": "The Right to Disconnect Charter is a policy that supports the safety, health, and well-being of team members in France by encouraging them to disconnect from work outside of regular working hours. The Charter aims to foster a healthy and well-rounded life by prioritizing family and friends over work [3]. It is applicable to all team members, regardless of position, tenure, and work location, to the extent permitted by French law [2]. The Charter outlines the responsibilities of both managers and individual contributors, including setting clear expectations, respecting rest periods, and not penalizing team members for exercising their rights under the Charter [1]. Team members are expected to manage their time efficiently, cooperate with time recording mechanisms, and be mindful of colleagues' and customers' working hours [1]. The Charter also provides guidance on recommended behaviors, such as delaying emails and Slack messages to the next working day, and encourages team members to speak with their manager if they feel their workload is preventing them from disconnecting [1]. The effectiveness of the Charter will be reviewed as required, and team members are encouraged to raise concerns with their manager or Team Member Relations if they have any issues [11].",
-      "citations_summary": "FAILED"
+      "generated_answer": "The Right to Disconnect Charter for team members in France is a document that reaffirms the importance of proper use of IT tools to respect rest and vacation time, as well as the balance between personal and family life and professional life [3]. It outlines the company's commitment to supporting team members in disconnecting from work and work-related communications outside of their normal working hours and during PTO [3]. The Charter defines disconnecting from work as the company's undertaking not to solicit team members during rest periods, and the absence of obligation for team members to respond to work-related solicitations during rest periods [3]. It also sets out expectations for managers and individual contributors, including the responsibility of managers to know the regular working hours of their direct reports and not penalize or unfairly treat team members for exercising their rights under the Charter [1]. The Charter encourages team members to be mindful of their communications and to use digital tools wisely, with respect for individuals and their privacy [4]. It also provides for the possibility of exceptions in case of emergencies or exceptional situations related to the requirements of the proper functioning of the Company's activity [1].",
+      "citations_summary": "VERIFIED"
     }
   ]
 }
