@@ -5,7 +5,8 @@ import gradio as gr
 import spaces
 
 from hybrid_search import load_index_and_metadata, hybrid_search
-from generate_answer import rewrite_query, build_prompt, stream_llm
+from generate_answer import rewrite_query, build_prompt
+from app.main import stream_llm
 
 INDEX_DIR = Path("data/index")
 
