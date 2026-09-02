@@ -126,6 +126,7 @@ async def stream_llm(system: str, prompt: str, model: str = None, base_url: str 
     api_key = api_key or os.environ.get("API_KEY")
     if not api_key:
         raise RuntimeError("API_KEY is not set in environment.")
+    api_key = api_key.strip()
 
     model = model or os.environ.get("MODEL_NAME", "meta/llama-3.2-11b-vision-instruct")
     base_url = base_url or os.environ.get("BASE_URL", "https://integrate.api.nvidia.com/v1")
