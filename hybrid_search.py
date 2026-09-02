@@ -26,23 +26,18 @@ import numpy as np
 _FAISS_INDEX_CACHE = {}
 _METADATA_CACHE = {}
 _BM25_CACHE = {}
-_EMBED_MODEL_CACHE = None
-_RERANKER_CACHE = None
 
+# Preload models at module level (on CPU) so ZeroGPU can safely intercept and manage them across multiple calls
+from sentence_transformers import SentenceTransformer, CrossEncoder
+print("Loading embedding model...")
+_EMBED_MODEL_CACHE = SentenceTransformer("BAAI/bge-small-en-v1.5")
+print("Loading reranker model...")
+_RERANKER_CACHE = CrossEncoder("cross-encoder/ms-marco-MiniLM-L-6-v2")
 
 def get_embedding_model():
-    global _EMBED_MODEL_CACHE
-    if _EMBED_MODEL_CACHE is None:
-        from sentence_transformers import SentenceTransformer
-        _EMBED_MODEL_CACHE = SentenceTransformer("BAAI/bge-small-en-v1.5")
     return _EMBED_MODEL_CACHE
 
-
 def get_reranker_model(model_name: str = "cross-encoder/ms-marco-MiniLM-L-6-v2"):
-    global _RERANKER_CACHE
-    if _RERANKER_CACHE is None:
-        from sentence_transformers import CrossEncoder
-        _RERANKER_CACHE = CrossEncoder(model_name)
     return _RERANKER_CACHE
 
 
