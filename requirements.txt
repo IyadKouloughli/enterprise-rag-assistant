@@ -4,3 +4,4 @@ faiss-cpu
 rank-bm25
 python-dotenv
 httpx
+huggingface-hub<0.30.0
