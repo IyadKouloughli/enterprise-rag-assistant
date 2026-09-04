@@ -149,6 +149,30 @@ async def call_llm(
     raise RuntimeError(last_error or "Unknown error calling LLM API")
 
 
+def call_llm_sync(
+    system: str,
+    prompt: str,
+    model: str = None,
+    base_url: str = None,
+    api_key: str = None,
+    temperature: float = 0.2,
+) -> str:
+    """Synchronous wrapper for call_llm, safe across different event loop contexts."""
+    try:
+        loop = asyncio.get_event_loop()
+    except RuntimeError:
+        loop = asyncio.new_event_loop()
+        asyncio.set_event_loop(loop)
+
+    coro = call_llm(system, prompt, model=model, base_url=base_url, api_key=api_key, temperature=temperature)
+    if loop.is_running():
+        import concurrent.futures
+        with concurrent.futures.ThreadPoolExecutor(max_workers=1) as pool:
+            return pool.submit(asyncio.run, coro).result()
+    else:
+        return loop.run_until_complete(coro)
+
+
 async def stream_llm(system: str, prompt: str, model: str = None, base_url: str = None, api_key: str = None) -> AsyncGenerator[str, None]:
     """Streams token chunks directly from OpenAI-compatible LLM endpoint via non-blocking httpx."""
     api_key = api_key or os.environ.get("API_KEY")
@@ -255,6 +279,29 @@ async def rewrite_query(
         return query
 
 
+def rewrite_query_sync(
+    query: str,
+    history: Optional[List[Dict[str, str]]] = None,
+    model: str = None,
+    base_url: str = None,
+    api_key: str = None,
+) -> str:
+    """Synchronous wrapper for rewrite_query."""
+    try:
+        loop = asyncio.get_event_loop()
+    except RuntimeError:
+        loop = asyncio.new_event_loop()
+        asyncio.set_event_loop(loop)
+
+    coro = rewrite_query(query, history=history, model=model, base_url=base_url, api_key=api_key)
+    if loop.is_running():
+        import concurrent.futures
+        with concurrent.futures.ThreadPoolExecutor(max_workers=1) as pool:
+            return pool.submit(asyncio.run, coro).result()
+    else:
+        return loop.run_until_complete(coro)
+
+
 def generate_answer(
     index_dir: Path,
     query: str,
@@ -277,7 +324,7 @@ def generate_answer(
     - security_audit: authorization and document filtering audit stats
     """
     # 1. Contextualize query if multi-turn history exists
-    effective_query = rewrite_query(query, history=history, model=model, base_url=base_url)
+    effective_query = rewrite_query_sync(query, history=history, model=model, base_url=base_url)
 
     # 2. Authorization-aware hybrid retrieval + neural reranking
     sources, audit_stats = hybrid_search(
@@ -319,7 +366,7 @@ def generate_answer(
 
     # 4. Prompt construction & LLM inference
     prompt = build_prompt(effective_query, sources)
-    answer = call_llm(SYSTEM_INSTRUCTIONS, prompt, model=model, base_url=base_url)
+    answer = call_llm_sync(SYSTEM_INSTRUCTIONS, prompt, model=model, base_url=base_url)
 
     # 5. Citation verification & Grounding audit
     verifier = CitationVerifier()

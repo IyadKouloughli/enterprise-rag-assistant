@@ -45,7 +45,7 @@ from dotenv import load_dotenv
 load_dotenv()
 
 from citation_verifier import CitationVerifier
-from generate_answer import call_llm, generate_answer
+from generate_answer import call_llm_sync, generate_answer
 from hybrid_search import hybrid_search
 
 
@@ -179,7 +179,7 @@ OUTPUT FORMAT: Return ONLY valid JSON in this exact structure:
         citation_accuracy = 1.0
 
     try:
-        raw_judge_res = call_llm(EVAL_JUDGE_SYSTEM, judge_prompt, temperature=0.0)
+        raw_judge_res = call_llm_sync(EVAL_JUDGE_SYSTEM, judge_prompt, temperature=0.0)
         # Parse JSON from response
         json_match = re.search(r"\{.*\}", raw_judge_res, re.DOTALL)
         if json_match:

@@ -2,14 +2,21 @@ import os
 import asyncio
 from pathlib import Path
 import gradio as gr
-import spaces
+try:
+    import spaces
+    gpu_decorator = spaces.GPU
+except (ImportError, Exception):
+    def gpu_decorator(func=None, **kwargs):
+        if func is None:
+            return lambda f: f
+        return func
 
 from hybrid_search import load_index_and_metadata, hybrid_search
 from generate_answer import rewrite_query, build_prompt, stream_llm
 
 INDEX_DIR = Path("data/index")
 
-@spaces.GPU
+@gpu_decorator
 def run_hybrid_search_gpu(query, role, top_k, rerank):
     """Wrapper to run hybrid_search inside a ZeroGPU context."""
     return hybrid_search(
